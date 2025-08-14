@@ -15,7 +15,11 @@
     "test": "cd server-js && npm run test-api",
     "test:approval": "cd server-js && npm run test-approval",
     "reset-db": "cd server-js && npm run reset-db",
-    "check-db": "cd server-js && npm run check-db"
+    "check-db": "cd server-js && npm run check-db",
+    "git:status": "git status",
+    "git:add": "git add .",
+    "git:push": "git push origin main",
+    "git:pull": "git pull origin main"
   },
   "keywords": [
     "budget",
