@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* ยูทิลิตี้คลาสสำหรับ UI */
+.card{@apply rounded-2xl bg-white shadow-soft border border-slate-100}
+.btn{@apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium shadow-soft transition active:scale-[.98]}
+.btn-primary{@apply btn bg-blue-600 text-white hover:bg-blue-700}
+.btn-secondary{@apply btn bg-green-600 text-white hover:bg-green-700}
+.btn-ghost{@apply btn bg-transparent hover:bg-slate-100}
+.input{@apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none focus:ring-4 ring-blue-100}
+.badge{@apply inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs}
+.badge-success{@apply bg-emerald-100 text-emerald-700}
+.badge-error{@apply bg-red-100 text-red-700}
+.badge-warning{@apply bg-amber-100 text-amber-700}
+.badge-muted{@apply bg-slate-100 text-slate-600}

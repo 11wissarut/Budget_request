@@ -1,0 +1,26 @@
+{
+  "name": "brm-server-js",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "check-db": "node check-db.js",
+    "check-users": "node check-users.js",
+    "reset-db": "node reset-db.js",
+    "check-structure": "node check-database-structure.js",
+    "test-api": "node ../test-api.js",
+    "test-approval": "node ../test-approval.js",
+    "setup": "node check-db.js && npm run dev"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^5.1.7"
+  }
+}

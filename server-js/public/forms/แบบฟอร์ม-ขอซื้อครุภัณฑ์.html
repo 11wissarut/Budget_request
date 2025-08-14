@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฟอร์มขอซื้อครุภัณฑ์</title>
+    <style>
+        body {
+            font-family: 'Sarabun', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+        .col {
+            flex: 1;
+        }
+        .signature-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            text-align: center;
+            width: 200px;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        @media print {
+            body { margin: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>แบบฟอร์มขอซื้อครุภัณฑ์</h1>
+        <h2>หน่วยงาน: ________________________</h2>
+    </div>
+
+    <div class="form-group">
+        <label>เรื่อง: ขออนุมัติซื้อครุภัณฑ์</label>
+    </div>
+
+    <div class="form-group">
+        <label>เรียน: ผู้อำนวยการ</label>
+    </div>
+
+    <div class="form-group">
+        <p style="text-indent: 2em;">
+            ด้วยหน่วยงานมีความจำเป็นต้องใช้ครุภัณฑ์เพื่อการปฏิบัติงาน จึงขออนุมัติซื้อครุภัณฑ์ ดังรายการต่อไปนี้
+        </p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="5%">ลำดับ</th>
+                <th width="40%">รายการครุภัณฑ์</th>
+                <th width="10%">จำนวน</th>
+                <th width="10%">หน่วย</th>
+                <th width="15%">ราคาต่อหน่วย</th>
+                <th width="20%">รวมเป็นเงิน</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>_________________________________</td>
+                <td>_______</td>
+                <td>_______</td>
+                <td>_____________</td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>_________________________________</td>
+                <td>_______</td>
+                <td>_______</td>
+                <td>_____________</td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>_________________________________</td>
+                <td>_______</td>
+                <td>_______</td>
+                <td>_____________</td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right; font-weight: bold;">รวมเป็นเงินทั้งสิ้น</td>
+                <td style="font-weight: bold;">_____________</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>เหตุผลความจำเป็น:</label>
+                <div style="border: 1px solid #ddd; min-height: 100px; padding: 10px;">
+                    _______________________________________________<br>
+                    _______________________________________________<br>
+                    _______________________________________________<br>
+                    _______________________________________________
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>แหล่งเงิน:</label>
+                <div style="padding: 10px;">
+                    ☐ งบประมาณแผ่นดิน<br>
+                    ☐ เงินรายได้<br>
+                    ☐ เงินบริจาค<br>
+                    ☐ อื่นๆ ระบุ ___________________
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>ปีงบประมาณ: พ.ศ. _________</label>
+    </div>
+
+    <div class="signature-section">
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div>ลงชื่อ ผู้ขอ</div>
+            <div>( _________________________ )</div>
+            <div>ตำแหน่ง _____________________</div>
+            <div>วันที่ ______________________</div>
+        </div>
+
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div>ลงชื่อ หัวหน้าหน่วยงาน</div>
+            <div>( _________________________ )</div>
+            <div>ตำแหน่ง _____________________</div>
+            <div>วันที่ ______________________</div>
+        </div>
+
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div>ลงชื่อ ผู้อำนวยการ</div>
+            <div>( _________________________ )</div>
+            <div>วันที่ ______________________</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
+        <h3>สำหรับเจ้าหน้าที่</h3>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label>☐ อนุมัติ</label>
+                    <label>☐ ไม่อนุมัติ เหตุผล: _________________________</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="signature-section">
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <div>ลงชื่อ เจ้าหน้าที่พัสดุ</div>
+                <div>( _________________________ )</div>
+                <div>วันที่ ______________________</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto print when opened
+        window.onload = function() {
+            // Uncomment the line below if you want auto-print
+            // window.print();
+        }
+    </script>
+</body>
+</html>
