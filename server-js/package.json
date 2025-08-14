@@ -9,7 +9,6 @@
     "check-db": "node check-db.js",
     "check-users": "node check-users.js",
     "reset-db": "node reset-db.js",
-    "check-structure": "node check-database-structure.js",
     "test-api": "node ../test-api.js",
     "test-approval": "node ../test-approval.js",
     "setup": "node check-db.js && npm run dev"

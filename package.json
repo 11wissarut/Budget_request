@@ -6,7 +6,6 @@
   "scripts": {
     "setup": "node setup.js",
     "install-all": "npm run setup",
-    "clean": "node clean-for-zip.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:web\" \"npm run dev:web-js\"",
     "dev:server": "cd server-js && npm run dev",
     "dev:web": "cd web && npm run dev",

@@ -46,5 +46,9 @@ logs/
 tmp/
 temp/
 
-# Old server folder
+# Old folders
 server/
+database/
+
+# Package files in root (will be installed by npm run setup)
+package-lock.json
