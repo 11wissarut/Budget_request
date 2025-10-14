@@ -1,20 +1,5 @@
-# BRM RBAC Fullstack
-
-ระบบจัดการคำของบประมาณแบบ Role-Based Access Control (RBAC)
-
-## 🏗️ โครงสร้างโปรเจกต์
-
-```
-brm-rbac-fullstack/
-├── server-js/       # Backend API (JavaScript + Express + MySQL)
-├── web/            # Frontend (React + TypeScript + Vite + Tailwind)
-├── web-js/         # Frontend (Vanilla JavaScript + HTML + CSS)
-├── test-api.js     # ทดสอบ API
-├── test-approval.js # ทดสอบการอนุมัติ
-└── README.md
-```
-
-## 🚀 การติดตั้งและรัน
+Budget_request
+การติดตั้งและรัน
 
 ### 1. ตั้งค่าฐานข้อมูล MySQL
 ```sql
