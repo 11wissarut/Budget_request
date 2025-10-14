@@ -21,28 +21,20 @@ brm-rbac-fullstack/
 CREATE DATABASE budget_request;
 ```
 
-### 2. Backend (JavaScript + MySQL)
-```bash
-cd server-js
+### 2. Backend
+cd server
 npm install
-cp .env.example .env  # แก้ไขการตั้งค่าฐานข้อมูล
-npm run reset-db      # สร้างตารางและข้อมูลเริ่มต้น
-npm run dev
+npm start
 ```
 
-### 3. Frontend React
-```bash
+### 3. Frontend 
+
 cd web
 npm install
 npm run dev
 ```
 
-### 4. Frontend JavaScript
-```bash
-cd web-js
-npm install
-npm start
-```
+
 
 ## 🌐 การเข้าใช้งาน
 
