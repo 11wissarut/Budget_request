@@ -5,13 +5,13 @@ Budget_request
 ```sql
 CREATE DATABASE budget_request;
 ```
-
+```
 ### 2. Backend
 cd server
 npm install
 npm start
 ```
-
+```
 ### 3. Frontend 
 
 cd web
