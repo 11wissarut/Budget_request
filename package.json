@@ -1,7 +1,8 @@
 {
   "name": "brm-rbac-fullstack",
   "version": "1.0.0",
-  "description": "ระบบจัดการคำของบประมาณแบบ Role-Based Access Control (RBAC)",
+  "description": "ระบบจัดการคำขอ งบประมาณแบบ Role-Based Access Control (RBAC)",
+  "type": "module",
   "main": "setup.js",
   "scripts": {
     "setup": "node setup.js",
@@ -45,5 +46,14 @@
   "bugs": {
     "url": "https://github.com/your-username/brm-rbac-fullstack/issues"
   },
-  "homepage": "https://github.com/your-username/brm-rbac-fullstack#readme"
+  "homepage": "https://github.com/your-username/brm-rbac-fullstack#readme",
+  "dependencies": {
+    "all": "^0.0.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.2",
+    "mysql2": "^3.9.7"
+  }
 }

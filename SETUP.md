@@ -32,14 +32,14 @@ mysql -u root -p
 
 ### 2. สร้างฐานข้อมูล
 ```sql
-CREATE DATABASE brm_rbac;
+CREATE DATABASE budget_request;
 EXIT;
 ```
 
 ### 3. สร้างผู้ใช้ฐานข้อมูล (ไม่บังคับ)
 ```sql
 CREATE USER 'brm_user'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON brm_rbac.* TO 'brm_user'@'localhost';
+GRANT ALL PRIVILEGES ON budget_request.* TO 'brm_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
@@ -120,7 +120,7 @@ npm start
 **วิธีแก้:**
 1. ตรวจสอบว่า MySQL ทำงานอยู่
 2. ตรวจสอบข้อมูลใน `.env` ให้ถูกต้อง
-3. ตรวจสอบว่าฐานข้อมูล `brm_rbac` ถูกสร้างแล้ว
+3. ตรวจสอบว่าฐานข้อมูล `budget_request` ถูกสร้างแล้ว
 
 ### ปัญหา: Port ถูกใช้งานแล้ว
 **วิธีแก้:**

@@ -78,7 +78,7 @@ chmod +x start.sh
 mysql -u root -p
 
 # สร้างฐานข้อมูล
-CREATE DATABASE brm_rbac;
+CREATE DATABASE budget_request;
 EXIT;
 ```
 
@@ -94,7 +94,7 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_mysql_password
-DB_NAME=brm_rbac
+DB_NAME=budget_request
 PORT=4002
 JWT_SECRET=your-super-secret-jwt-key
 NODE_ENV=development

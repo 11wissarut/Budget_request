@@ -1,7 +1,12 @@
 // ระบบ JWT Authentication และ RBAC
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  console.error("FATAL ERROR: JWT_SECRET is not defined in the environment variables. Please create a .env file and set the JWT_SECRET value.");
+  process.exit(1);
+}
 
 // สร้าง JWT token
 export function signToken(user) {
@@ -20,13 +25,16 @@ export function verifyToken(token) {
 // Middleware ตรวจสอบการล็อกอิน
 export function authRequired(req, res, next) {
   const authHeader = req.headers.authorization
+  // console.log('authHeader:', authHeader);
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'No token provided' })
   }
   
   const token = authHeader.substring(7)
+  // console.log('Received token:', token);
   const user = verifyToken(token)
   if (!user) {
+    // console.log('Token verification failed');
     return res.status(401).json({ message: 'Invalid token' })
   }
   
@@ -36,10 +44,10 @@ export function authRequired(req, res, next) {
 
 // กำหนดสิทธิ์เข้าถึงโมดูลต่างๆ ตาม role
 const rolePermissions = {
-  admin: ['dashboard', 'users', 'requests', 'forms_download', 'forms_submit'],
-  planner: ['dashboard', 'requests', 'forms_download', 'forms_submit'],
-  procurement: ['dashboard', 'forms_download', 'forms_submit'],
-  board: ['dashboard', 'forms_download']
+  admin: ['dashboard', 'users', 'requests', 'manage_requests', 'forms_download', 'forms_submit', 'disbursements'],
+  planner: ['dashboard', 'requests', 'manage_requests', 'forms_download', 'forms_submit', 'disbursements'],
+  procurement: ['dashboard', 'manage_requests', 'forms_download', 'forms_submit'],
+  board: ['dashboard', 'requests', 'forms_download']
 }
 
 // Middleware ตรวจสอบสิทธิ์เข้าถึงโมดูล

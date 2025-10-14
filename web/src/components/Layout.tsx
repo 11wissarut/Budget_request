@@ -7,7 +7,9 @@ import type { ModuleKey, Role } from '@/types'
 // เมนูถูกวาดตามสิทธิ์ (RBAC)
 const items: { to: string; label: string; key: ModuleKey }[] = [
   { to: '/dashboard', label: 'แดชบอร์ด', key: 'dashboard' },
-  { to: '/requests', label: 'จัดการคำของบประมาณ', key: 'requests' },
+  { to: '/manage-requests', label: 'จัดการคำของบประมาณ', key: 'manage_requests' },
+  { to: '/disbursements', label: 'เบิกจ่ายงบประมาณ', key: 'disbursements' },
+  { to: '/requests', label: 'พิจารณาคำของบประมาณ', key: 'requests' },
   { to: '/forms/download', label: 'ดาวน์โหลดแบบฟอร์ม', key: 'forms_download' },
   { to: '/forms/submit', label: 'ส่งแบบฟอร์มคำของบ', key: 'forms_submit' },
   { to: '/users', label: 'จัดการผู้ใช้', key: 'users' },

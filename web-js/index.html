@@ -74,7 +74,8 @@
                     <ul class="space-y-2">
                         <li><a href="#" data-page="dashboard" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">แดชบอร์ด</a></li>
                         <li id="nav-users" class="hidden"><a href="#" data-page="users" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">จัดการผู้ใช้</a></li>
-                        <li id="nav-requests" class="hidden"><a href="#" data-page="requests" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">จัดการคำของบประมาณ</a></li>
+                        <li id="nav-manage-requests" class="hidden"><a href="#" data-page="manage-requests" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">จัดการคำของบประมาณ</a></li>
+                        <li id="nav-requests" class="hidden"><a href="#" data-page="requests" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">พิจารณาคำของบประมาณ</a></li>
                         <li id="nav-forms-download"><a href="#" data-page="forms-download" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">ดาวน์โหลดแบบฟอร์ม</a></li>
                         <li id="nav-forms-submit" class="hidden"><a href="#" data-page="forms-submit" class="sidebar-item block px-4 py-2 text-gray-300 rounded hover:bg-gray-700">คำของบประมาณ</a></li>
                     </ul>
@@ -142,11 +143,46 @@
                     </div>
                 </div>
 
+                <!-- Manage Requests Page -->
+                <div id="page-manage-requests" class="page hidden">
+                    <div class="bg-white rounded-lg shadow p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">จัดการคำของบประมาณ</h2>
+                        <p id="manage-requests-description" class="text-sm text-gray-500 mt-1">จัดการคำของบที่ส่งมาจากหน้าส่งแบบฟอร์ม (เพิ่ม/แก้ไข/ลบ) - สามารถแก้ไขได้เฉพาะคำของบที่ยังไม่ได้รับการพิจารณา</p>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="bg-white p-4 rounded-lg shadow mb-6">
+                        <input type="text" id="manage-requests-search" placeholder="ค้นหาคำของบ..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <!-- Requests Table -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ชื่อรายการ</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">หมวดหมู่</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ปีงบ</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">วงเงิน</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">สถานะ</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">วันที่สร้าง</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="manage-requests-table" class="bg-white divide-y divide-gray-200">
+                                    <!-- จะถูกเติมด้วย JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Requests Page -->
                 <div id="page-requests" class="page hidden">
                     <div class="bg-white rounded-lg shadow p-6 mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">จัดการคำของบประมาณ</h2>
-                        <p class="text-sm text-gray-500 mt-1">จัดการและอนุมัติคำของบประมาณที่ส่งเข้ามา</p>
+                        <h2 class="text-2xl font-bold text-gray-900">พิจารณาคำของบประมาณ</h2>
+                        <p class="text-sm text-gray-500 mt-1">พิจารณาและอนุมัติคำของบประมาณที่ส่งเข้ามา</p>
                     </div>
 
                     <!-- Search and Filter -->

@@ -37,10 +37,10 @@ class Auth {
         if (!user) return false
 
         const rolePermissions = {
-            admin: ['dashboard', 'users', 'requests', 'forms_download', 'forms_submit'],
-            planner: ['dashboard', 'requests', 'forms_download', 'forms_submit'],
-            procurement: ['dashboard', 'forms_download', 'forms_submit'],
-            board: ['dashboard', 'forms_download']
+            admin: ['dashboard', 'users', 'requests', 'manage_requests', 'forms_download', 'forms_submit'],
+            planner: ['dashboard', 'requests', 'manage_requests', 'forms_download', 'forms_submit'],
+            procurement: ['dashboard', 'manage_requests', 'forms_download', 'forms_submit'],
+            board: ['dashboard', 'requests', 'forms_download']
         }
 
         const userPermissions = rolePermissions[user.role] || []

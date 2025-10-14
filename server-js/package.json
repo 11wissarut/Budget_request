@@ -1,4 +1,4 @@
-{
+  {
   "name": "brm-server-js",
   "type": "module",
   "version": "1.0.0",
@@ -15,11 +15,13 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "brm-rbac-fullstack": "file:..",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
-    "sqlite3": "^5.1.7"
+    "mysql2": "^3.14.3",
+    "pdfkit": "^0.13.0"
   }
 }

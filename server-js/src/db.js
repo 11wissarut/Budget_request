@@ -8,7 +8,7 @@ const dbConfig = {
   port: parseInt(process.env.DB_PORT) || 3306,
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'brm_rbac',
+  database: process.env.DB_NAME || 'budget_request',
   charset: 'utf8mb4'
 }
 
@@ -18,23 +18,19 @@ export const pool = mysql.createPool(dbConfig)
 // ฟังก์ชันเชื่อมต่อและสร้างตาราง (สำหรับ HeidiSQL)
 export async function initDatabase() {
   try {
-    console.log('🔄 กำลังเชื่อมต่อฐานข้อมูล brm_rbac...')
-
     // ทดสอบการเชื่อมต่อ
     try {
       const [result] = await pool.execute('SELECT DATABASE() as db_name')
-      console.log(`✅ เชื่อมต่อฐานข้อมูล "${result[0].db_name}" สำเร็จ`)
     } catch (error) {
       console.log('❌ ไม่สามารถเชื่อมต่อฐานข้อมูลได้')
       console.log('💡 กรุณาตรวจสอบ:')
       console.log('   - MySQL Server เปิดอยู่หรือไม่')
-      console.log('   - ฐานข้อมูล brm_rbac มีอยู่ใน HeidiSQL หรือไม่')
+      console.log('   - ฐานข้อมูล budget_request มีอยู่ใน HeidiSQL หรือไม่')
       console.log('   - ข้อมูลการเชื่อมต่อใน .env ถูกต้องหรือไม่')
       throw error
     }
 
     // สร้างตารางแบบง่ายๆ
-    console.log('🔄 กำลังสร้างตาราง...')
 
     // ตาราง users
     await pool.execute(`
@@ -50,14 +46,13 @@ export async function initDatabase() {
 
     // ตาราง requests
     await pool.execute(`
-      CREATE TABLE IF NOT EXISTS requests (
+      CREATE TABLE IF NOT EXISTS budget_requests (
         id VARCHAR(50) PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         category VARCHAR(100) NOT NULL,
-        fiscalYear INT NOT NULL,
-        amount DECIMAL(15,2) NOT NULL,
+        fiscal_year INT NOT NULL,
+        total_amount DECIMAL(15,2) NOT NULL,
         approvedAmount DECIMAL(15,2) NULL,
-        note TEXT,
         approvalNote TEXT,
         fileName VARCHAR(255),
         fileUrl VARCHAR(500),
@@ -78,13 +73,24 @@ export async function initDatabase() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     `)
 
-    console.log('✅ สร้างตารางสำเร็จ')
+    // ตาราง forms
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS forms (
+        id VARCHAR(50) PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        file_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+        file_path VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    `)
+
+    // console.log('✅ สร้างตารางสำเร็จ')
   } catch (error) {
     console.error('❌ เกิดข้อผิดพลาด:', error.message)
     console.log('\n💡 วิธีแก้ไข:')
     console.log('1. เปิด XAMPP และ Start MySQL')
     console.log('2. เปิด phpMyAdmin (http://localhost/phpmyadmin)')
-    console.log('3. สร้างฐานข้อมูลชื่อ "brm_rbac"')
+    console.log('3. สร้างฐานข้อมูลชื่อ "budget_request"')
     console.log('4. รันโปรแกรมใหม่อีกครั้ง')
     throw error
   }
@@ -128,7 +134,7 @@ export async function seedIfEmpty() {
 
         for (const request of requests) {
           await connection.execute(
-            'INSERT INTO requests (id, title, category, fiscalYear, amount, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO budget_requests (id, title, category, fiscalYear, amount, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)',
             request
           )
         }

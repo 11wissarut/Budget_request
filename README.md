@@ -18,7 +18,7 @@ brm-rbac-fullstack/
 
 ### 1. ตั้งค่าฐานข้อมูล MySQL
 ```sql
-CREATE DATABASE brm_rbac;
+CREATE DATABASE budget_request;
 ```
 
 ### 2. Backend (JavaScript + MySQL)

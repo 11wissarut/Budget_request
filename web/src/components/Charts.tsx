@@ -2,9 +2,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, 
 import type { BudgetRequest } from '@/types'
 
 export default function Charts({requests}:{requests:BudgetRequest[]}) {
-  const byCategory = Object.values(requests.reduce((acc:any, r) => {
+  const byCategory = Object.values(requests.filter(r => r.status === 'approved').reduce((acc:any, r) => {
     acc[r.category] = acc[r.category] || { name: r.category, amount: 0 }
-    acc[r.category].amount += r.amount
+    acc[r.category].amount += r.approvedAmount || 0
     return acc
   }, {} as Record<string, {name: string, amount: number}>))
 

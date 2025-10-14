@@ -7,7 +7,7 @@ const dbConfig = {
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'brm_rbac'
+  database: process.env.DB_NAME || 'budget_request'
 }
 
 async function checkDatabase() {
@@ -46,9 +46,9 @@ async function checkDatabase() {
     console.log('')
     console.log('💡 วิธีแก้ไข:')
     console.log('1. ตรวจสอบว่า MySQL Server เปิดอยู่')
-    console.log('2. ตรวจสอบว่าฐานข้อมูล brm_rbac มีอยู่ใน HeidiSQL')
+    console.log('2. ตรวจสอบว่าฐานข้อมูล budget_request มีอยู่ใน HeidiSQL')
     console.log('3. ตรวจสอบการตั้งค่าใน .env (host, port, user, password)')
-    console.log('4. ตรวจสอบว่า user มีสิทธิ์เข้าถึงฐานข้อมูล brm_rbac')
+    console.log('4. ตรวจสอบว่า user มีสิทธิ์เข้าถึงฐานข้อมูล budget_request')
   }
 }
 

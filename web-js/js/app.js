@@ -100,6 +100,7 @@ class App {
         // แสดง/ซ่อนเมนูตามสิทธิ์
         const navItems = {
             'nav-users': Auth.hasPermission('users'),
+            'nav-manage-requests': Auth.hasPermission('manage_requests'),
             'nav-requests': Auth.hasPermission('requests'),
             'nav-forms-submit': Auth.hasPermission('forms_submit')
         }
@@ -177,6 +178,9 @@ class App {
                 case 'users':
                     await this.loadUsers()
                     break
+                case 'manage-requests':
+                    await this.loadManageRequests()
+                    break
                 case 'requests':
                     await this.loadRequests()
                     break
@@ -246,6 +250,40 @@ class App {
         }
     }
 
+    async loadManageRequests() {
+        try {
+            const requests = await RequestsAPI.list()
+            this.allManageRequests = requests
+            this.displayManageRequests(requests)
+
+            // อัปเดตคำอธิบายตามสิทธิ์ผู้ใช้
+            const user = Auth.getUser()
+            const canEdit = user && (user.role === 'admin' || user.role === 'planner')
+            const description = document.getElementById('manage-requests-description')
+            if (description) {
+                description.textContent = canEdit ?
+                    'จัดการคำของบที่ส่งมาจากหน้าส่งแบบฟอร์ม (เพิ่ม/แก้ไข/ลบ) - สามารถแก้ไขได้เฉพาะคำของบที่ยังไม่ได้รับการพิจารณา' :
+                    'ตรวจสอบรายการคำของบและดูสถานะของรายการงบที่ได้รับการอนุมัติหรืออยู่ระหว่างพิจารณา (ดูได้อย่างเดียว)'
+            }
+
+            // Setup search
+            const searchInput = document.getElementById('manage-requests-search')
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase()
+                    const filtered = requests.filter(r =>
+                        r.title.toLowerCase().includes(query) ||
+                        r.category.toLowerCase().includes(query)
+                    )
+                    this.displayManageRequests(filtered)
+                })
+            }
+        } catch (error) {
+            console.error('Error loading manage requests:', error)
+            alert('เกิดข้อผิดพลาดในการโหลดข้อมูลคำขอ')
+        }
+    }
+
     async loadRequests() {
         try {
             const requests = await RequestsAPI.list()
@@ -254,6 +292,133 @@ class App {
         } catch (error) {
             console.error('Error loading requests:', error)
             alert('เกิดข้อผิดพลาดในการโหลดข้อมูลคำขอ')
+        }
+    }
+
+    displayManageRequests(requests) {
+        const tbody = document.getElementById('manage-requests-table')
+        if (!tbody) return
+
+        const user = Auth.getUser()
+        const canEdit = user && (user.role === 'admin' || user.role === 'planner')
+        const canView = user && (user.role === 'admin' || user.role === 'planner' || user.role === 'procurement')
+
+        tbody.innerHTML = requests.map(request => {
+            const statusBadge = request.status === 'approved' ?
+                '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">อนุมัติ</span>' :
+                request.status === 'rejected' ?
+                '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">ปฏิเสธ</span>' :
+                '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">รอพิจารณา</span>'
+
+            const canEditThis = canEdit && request.status === 'pending'
+
+            return `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${request.title}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${request.category}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${request.fiscalYear}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${Number(request.amount).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${statusBadge}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(request.createdAt).toLocaleDateString('th-TH')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        ${canEdit ? `
+                            <button onclick="app.editManageRequest('${request.id}')"
+                                    class="text-blue-600 hover:text-blue-900 mr-3"
+                                    ${!canEditThis ? 'disabled style="opacity:0.5"' : ''}>
+                                แก้ไข
+                            </button>
+                            <button onclick="app.deleteManageRequest('${request.id}')"
+                                    class="text-red-600 hover:text-red-900"
+                                    ${!canEditThis ? 'disabled style="opacity:0.5"' : ''}>
+                                ลบ
+                            </button>
+                        ` : '<span class="text-xs text-gray-500">อ่านอย่างเดียว</span>'}
+                    </td>
+                </tr>
+            `
+        }).join('')
+    }
+
+    async editManageRequest(id) {
+        const request = this.allManageRequests?.find(r => r.id === id)
+        if (!request) return
+
+        if (request.status !== 'pending') {
+            alert('ไม่สามารถแก้ไขคำของบที่ถูกพิจารณาแล้ว')
+            return
+        }
+
+        const title = prompt('ชื่อรายการ:', request.title)
+        if (title === null) return
+
+        const category = prompt('หมวดหมู่ (ครุภัณฑ์/ก่อสร้าง/วัสดุ/อื่นๆ):', request.category)
+        if (category === null) return
+
+        const fiscalYear = prompt('ปีงบประมาณ:', request.fiscalYear)
+        if (fiscalYear === null) return
+
+        const amount = prompt('วงเงิน (บาท):', request.amount)
+        if (amount === null) return
+
+        const note = prompt('หมายเหตุ:', request.note || '')
+        if (note === null) return
+
+        try {
+            const response = await fetch(`http://localhost:4002/api/requests/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Auth.getToken()}`
+                },
+                body: JSON.stringify({
+                    title,
+                    category,
+                    fiscalYear: parseInt(fiscalYear),
+                    amount: parseFloat(amount),
+                    note
+                })
+            })
+
+            if (response.ok) {
+                alert('แก้ไขคำของบเรียบร้อยแล้ว')
+                this.loadManageRequests()
+            } else {
+                alert('เกิดข้อผิดพลาดในการแก้ไข')
+            }
+        } catch (error) {
+            console.error('Error editing request:', error)
+            alert('เกิดข้อผิดพลาดในการแก้ไข')
+        }
+    }
+
+    async deleteManageRequest(id) {
+        const request = this.allManageRequests?.find(r => r.id === id)
+        if (!request) return
+
+        if (request.status !== 'pending') {
+            alert('ไม่สามารถลบคำของบที่ถูกพิจารณาแล้ว')
+            return
+        }
+
+        if (confirm('คุณแน่ใจหรือไม่ที่จะลบคำของบนี้?')) {
+            try {
+                const response = await fetch(`http://localhost:4002/api/requests/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${Auth.getToken()}`
+                    }
+                })
+
+                if (response.ok) {
+                    alert('ลบคำของบเรียบร้อยแล้ว')
+                    this.loadManageRequests()
+                } else {
+                    alert('เกิดข้อผิดพลาดในการลบ')
+                }
+            } catch (error) {
+                console.error('Error deleting request:', error)
+                alert('เกิดข้อผิดพลาดในการลบ')
+            }
         }
     }
 
@@ -359,18 +524,42 @@ class App {
                     <div class="text-red-500 text-3xl mr-3">📄</div>
                     <div class="flex-1">
                         <h3 class="text-lg font-medium text-gray-900">${form.name}</h3>
-                        <p class="text-sm text-gray-500">ขนาด: ${form.size}</p>
+                        <p class="text-sm text-gray-500">ขนาด: ${form.size || 'ไฟล์แบบฟอร์ม'}</p>
                     </div>
                 </div>
-                <a href="${form.url}" target="_blank"
+                <button onclick="app.downloadFile('${form.url}', '${form.fileName || form.name}')"
                    class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-center block">
                     ดาวน์โหลด
-                </a>
+                </button>
             </div>
         `).join('')
     }
 
+    async downloadFile(url, fileName) {
+        try {
+            const token = Auth.getToken()
+            const response = await fetch(url, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            })
 
+            if (!response.ok) {
+                throw new Error('ไม่สามารถดาวน์โหลดไฟล์ได้')
+            }
+
+            const blob = await response.blob()
+            const downloadUrl = window.URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = downloadUrl
+            link.download = fileName
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            window.URL.revokeObjectURL(downloadUrl)
+        } catch (error) {
+            console.error('Download error:', error)
+            alert('เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์: ' + error.message)
+        }
+    }
 
     showNoFormsMessage() {
         const grid = document.getElementById('forms-grid')

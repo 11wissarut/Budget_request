@@ -57,7 +57,7 @@ async function main() {
     console.log(`✅ MySQL: ${mysqlVersion}`)
   } catch (error) {
     console.log('⚠️ ไม่พบ MySQL ในระบบ')
-    console.log('📝 กรุณาติดตั้ง MySQL และสร้างฐานข้อมูล brm_rbac')
+    console.log('📝 กรุณาติดตั้ง MySQL และสร้างฐานข้อมูล budget_request')
   }
 
   // 3. ติดตั้ง Backend
@@ -115,7 +115,7 @@ async function main() {
   console.log('═'.repeat(50))
   console.log('📋 ขั้นตอนต่อไป:')
   console.log('1. แก้ไขไฟล์ server-js/.env ให้ตรงกับการตั้งค่าฐานข้อมูล')
-  console.log('2. สร้างฐานข้อมูล: CREATE DATABASE brm_rbac;')
+  console.log('2. สร้างฐานข้อมูล: CREATE DATABASE budget_request;')
   console.log('3. รันคำสั่ง: cd server-js && npm run reset-db')
   console.log('4. เริ่มต้นเซิร์ฟเวอร์: npm run dev')
   console.log('')
